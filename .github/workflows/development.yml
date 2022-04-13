@@ -10,14 +10,8 @@ env:
 
 jobs:
 
-  test:
-
-  packaging:
-
-    needs: test
-
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,8 +19,8 @@ jobs:
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME"
 
-      - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME"
+      - name: Run docker container
+        run: docker run --rm -it -v $PWD:/build $IMAGE_NAME bash
 
       - name: Upload image
         uses: actions/upload-artifact@v2

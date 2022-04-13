@@ -27,4 +27,4 @@ jobs:
         with:
           name: builds
           path: |
-            *.whl
+            ./*.whl

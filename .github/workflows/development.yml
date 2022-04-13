@@ -1,0 +1,36 @@
+name: Development packaging
+
+on:
+  push:
+    branches:
+      - 'develop'
+
+env:
+  IMAGE_NAME: opencv-builder
+
+jobs:
+
+  test:
+
+  packaging:
+
+    needs: test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME"
+
+      - name: Build image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME"
+
+      - name: Upload image
+        uses: actions/upload-artifact@v2
+        with:
+          name: builds
+          path: |
+            *.whl

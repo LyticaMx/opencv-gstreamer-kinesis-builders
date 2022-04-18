@@ -23,8 +23,8 @@ jobs:
         run: docker run --rm -v $PWD:/build $IMAGE_NAME bash
 
       - name: Upload image
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: builds
           path: |
-            ./*.whl
+            *.whl

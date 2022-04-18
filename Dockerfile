@@ -8,5 +8,5 @@ VOLUME /build
 
 RUN echo "hello wheel" > hello.whl
 
-FROM alpine AS export-stage
+FROM scratch AS export-stage
 COPY --from=stage1 /build/*.whl .

@@ -20,11 +20,11 @@ jobs:
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
 
       - name: Run docker container
-        run: docker run --rm -v $PWD:/build $IMAGE_NAME bash
+        run: docker run --rm -v $PWD/build:/build $IMAGE_NAME bash
 
       - name: Upload image
         uses: actions/upload-artifact@v3
         with:
           name: builds
           path: |
-            *.whl
+            build/*.whl

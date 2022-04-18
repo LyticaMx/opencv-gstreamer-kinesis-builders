@@ -7,4 +7,4 @@ WORKDIR /builder
 RUN echo "hello wheel" > hello.whl
 
 FROM scratch AS export-stage
-COPY --from=builder *.whl .
+COPY --from=builder /builder/*.whl .

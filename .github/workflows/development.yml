@@ -32,11 +32,10 @@ jobs:
           --output build .
 
       - name: Run ls
-        run: ls -l
+        run: ls -l build
 
       - name: Upload image
         uses: actions/upload-artifact@v3
         with:
-          name: builds
           path: |
-            build/*.whl
+            build

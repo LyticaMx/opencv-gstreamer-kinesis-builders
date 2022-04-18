@@ -31,6 +31,9 @@ jobs:
           -t $IMAGE_NAME \
           --output build .
 
+      - name: Run ls
+        run: ls -l
+
       - name: Upload image
         uses: actions/upload-artifact@v3
         with:

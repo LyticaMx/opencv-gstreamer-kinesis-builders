@@ -9,4 +9,4 @@ VOLUME /build
 RUN echo "hello wheel" > hello.whl
 
 FROM scratch AS export-stage
-COPY --from=builder /build/*.whl .
+COPY --from=builder *.whl /build

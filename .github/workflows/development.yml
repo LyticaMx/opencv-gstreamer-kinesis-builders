@@ -28,8 +28,8 @@ jobs:
           docker buildx build \
           --platform linux/amd64,linux/arm64 \
           -f docker/Dockerfile \
-          -t $IMAGE_NAME
-          --output build
+          -t $IMAGE_NAME \
+          --output build .
 
       - name: Upload image
         uses: actions/upload-artifact@v3

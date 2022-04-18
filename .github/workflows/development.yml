@@ -15,12 +15,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
 
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
-
-      - name: Run docker container
-        run: docker run --rm -v $PWD/build:/build $IMAGE_NAME bash
+        run: |
+          docker buildx build \
+          --platform linux/amd64,linux/arm64 \
+          -f docker/Dockerfile \
+          -t $IMAGE_NAME
+          --output build .
 
       - name: Upload image
         uses: actions/upload-artifact@v3

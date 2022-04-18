@@ -28,4 +28,6 @@ RUN git clone --recursive https://github.com/opencv/opencv-python.git .
 
 RUN pip wheel . --verbose
 
-RUN mv opencv*.whl /build
+COPY entrypoint.sh /usr/local/bin/
+
+ENTRYPOINT ["entrypoint.sh"]

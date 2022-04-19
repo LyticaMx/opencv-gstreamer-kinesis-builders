@@ -3,7 +3,7 @@ FROM ubuntu:20.04 AS builder
 WORKDIR /builder
 
 RUN apt-get update && \
-    apt-get upgrade && \
+    apt-get upgrade -y && \
     apt-get install -y  \
 	libgstreamer1.0-0 \
 	gstreamer1.0-plugins-base \
@@ -17,7 +17,7 @@ RUN apt-get update && \
 	libgstreamer-plugins-base1.0-dev \
 	pkg-config \
 	git \
-    m4 \
+	m4 \
 	build-essential \
 	cmake \
 	ninja-build

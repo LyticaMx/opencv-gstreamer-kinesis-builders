@@ -2,9 +2,14 @@ FROM ubuntu:20.04 AS builder
 
 WORKDIR /builder
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y  \
+	libssl-dev \
+	libcurl4-openssl-dev \
+	liblog4cplus-dev \
 	libgstreamer1.0-0 \
 	gstreamer1.0-plugins-base \
 	gstreamer1.0-plugins-good \
@@ -29,4 +34,4 @@ RUN mkdir build && cd build && \
     make
 
 FROM scratch AS export-stage
-COPY --from=builder /builder/build build
+COPY --from=builder /builder/build .

@@ -34,5 +34,6 @@ jobs:
       - name: Upload image
         uses: actions/upload-artifact@v3
         with:
+          name: opencv
           path: |
             build/

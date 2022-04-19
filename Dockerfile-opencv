@@ -2,9 +2,6 @@ FROM python:3.9-buster AS builder
 
 WORKDIR /builder
 
-ENV CMAKE_ARGS="-DCMAKE_BUILD_TYPE=RELEASE -DWITH_GSTREAMER=ON"
-ENV ENABLE_HEADLESS=1
-
 RUN apt-get update && apt-get upgrade -y
 
 RUN \
@@ -19,12 +16,15 @@ RUN \
 	gstreamer1.0-tools \
 	libgstreamer1.0-dev \
 	libgstreamer-plugins-base1.0-dev \
+	libjpeg-dev \
 	git \
 	ninja-build
 
 # get opencv and build it
 RUN git clone --recursive https://github.com/opencv/opencv-python.git .
 
+ENV CMAKE_ARGS="-DCMAKE_BUILD_TYPE=RELEASE -DWITH_GSTREAMER=ON -DBUILD_JPEG=ON"
+ENV ENABLE_HEADLESS=1
 RUN pip wheel . --verbose
 
 FROM scratch AS export-stage

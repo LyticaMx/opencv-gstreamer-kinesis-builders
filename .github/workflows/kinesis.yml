@@ -1,12 +1,12 @@
-name: Development packaging
+name: Kinesis builder
 
 on:
   push:
     branches:
-      - 'main'
+      - 'kinesis'
 
 env:
-  IMAGE_NAME: opencv-builder
+  IMAGE_NAME: kinesis-builder
 
 jobs:
 
@@ -26,16 +26,14 @@ jobs:
       - name: Build image
         run: |
           docker buildx build \
-          --platform linux/amd64,linux/arm64 \
-          -f Dockerfile \
+          --platform linux/amd64 \
+          -f Dockerfile-kinesis \
           -t $IMAGE_NAME \
           --output build .
-
-      - name: Run ls
-        run: ls -l build/linux_amd64
 
       - name: Upload image
         uses: actions/upload-artifact@v3
         with:
+          name: kinesis
           path: |
             build/

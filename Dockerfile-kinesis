@@ -1,6 +1,6 @@
 FROM ubuntu:20.04 AS builder
 
-WORKDIR /builder
+WORKDIR /kinesis
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -24,14 +24,17 @@ RUN apt-get update && \
 	git \
 	m4 \
 	build-essential \
-	cmake \
-	ninja-build
-
+	cmake
 
 RUN git clone https://github.com/awslabs/amazon-kinesis-video-streams-producer-sdk-cpp.git .
+
+# Apply patch
+COPY kinesis-patch.diff .
+RUN git apply kinesis-patch.diff
+
 RUN mkdir build && cd build && \
-	cmake .. -DBUILD_GSTREAMER_PLUGIN=ON -DBUILD_DEPENDENCIES=OFF && \
+	cmake .. -DBUILD_GSTREAMER_PLUGIN=ON -DBUILD_DEPENDENCIES=OFF -DBUILD_STATIC=1 && \
     make
 
 FROM scratch AS export-stage
-COPY --from=builder /builder/build .
+COPY --from=builder /kinesis/build .
